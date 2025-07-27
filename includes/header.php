@@ -11,7 +11,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-gradient mb-4">
   <div class="container">
-    <a class="navbar-brand" href="/index.php">
+    <a class="navbar-brand" href="/otel-rezervasyon/</a>index.php">
       <i class="bi bi-building"></i> Otel Rezervasyon
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,10 +19,10 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="/index.php"><i class="bi bi-house-door"></i> Ana Sayfa</a></li>
-        <li class="nav-item"><a class="nav-link" href="/odalar.php"><i class="bi bi-door-open"></i> Odalar</a></li>
-        <li class="nav-item"><a class="nav-link" href="/rezervasyon.php"><i class="bi bi-calendar-check"></i> Rezervasyon</a></li>
-        <li class="nav-item"><a class="nav-link" href="/login.php"><i class="bi bi-box-arrow-in-right"></i> Giriş</a></li>
+        <li class="nav-item"><a class="nav-link" href="/otel-rezervasyon/index.php"><i class="bi bi-house-door"></i> Ana Sayfa</a></li>
+        <li class="nav-item"><a class="nav-link" href="/otel-rezervasyon/odalar.php"><i class="bi bi-door-open"></i> Odalar</a></li>
+        <li class="nav-item"><a class="nav-link" href="/otel-rezervasyon/rezervasyon.php"><i class="bi bi-calendar-check"></i> Rezervasyon</a></li>
+        <li class="nav-item"><a class="nav-link" href="/otel-rezervasyon/login.php"><i class="bi bi-box-arrow-in-right"></i> Giriş</a></li>
         <li class="nav-item"><a class="nav-link" href="/register.php"><i class="bi bi-person-plus"></i> Kayıt Ol</a></li>
       </ul>
     </div>
