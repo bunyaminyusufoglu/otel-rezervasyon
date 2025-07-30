@@ -11,7 +11,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-gradient mb-4">
   <div class="container">
-    <a class="navbar-brand" href="/otel-rezervasyon/</a>index.php">
+    <a class="navbar-brand" href="/otel-rezervasyon/index.php">
       <i class="bi bi-building"></i> Otel Rezervasyon
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,4 +28,24 @@
     </div>
   </div>
 </nav>
+<?php
+// Hata ve başarı mesajlarını göster
+if (isset($_SESSION['errors'])) {
+    echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">';
+    foreach ($_SESSION['errors'] as $error) {
+        echo htmlspecialchars($error) . '<br>';
+    }
+    echo '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
+    echo '</div>';
+    unset($_SESSION['errors']);
+}
+
+if (isset($_SESSION['success'])) {
+    echo '<div class="alert alert-success alert-dismissible fade show" role="alert">';
+    echo htmlspecialchars($_SESSION['success']);
+    echo '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
+    echo '</div>';
+    unset($_SESSION['success']);
+}
+?>
 <div class="container"> 
