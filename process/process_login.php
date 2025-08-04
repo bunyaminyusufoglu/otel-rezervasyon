@@ -1,6 +1,5 @@
 <?php
-session_start();
-require_once 'includes/db.php';
+require_once '../../includes/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = trim($_POST['email']);
@@ -36,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
                 
                 $_SESSION['success'] = "Hoş geldiniz, " . $user['first_name'] . "!";
-                header("Location: index.php");
+                header("Location: ../../index.php");
                 exit();
             } else {
                 $errors[] = "E-posta veya şifre hatalı.";
@@ -48,11 +47,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (!empty($errors)) {
         $_SESSION['errors'] = $errors;
-        header("Location: login.php");
+        header("Location: ../../pages/auth/login.php");
         exit();
     }
 } else {
-    header("Location: login.php");
+    header("Location: ../../pages/auth/login.php");
     exit();
 }
 ?> 

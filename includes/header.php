@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -20,10 +21,10 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item"><a class="nav-link" href="/otel-rezervasyon/index.php"><i class="bi bi-house-door"></i> Ana Sayfa</a></li>
-        <li class="nav-item"><a class="nav-link" href="/otel-rezervasyon/odalar.php"><i class="bi bi-door-open"></i> Odalar</a></li>
-        <li class="nav-item"><a class="nav-link" href="/otel-rezervasyon/rezervasyon.php"><i class="bi bi-calendar-check"></i> Rezervasyon</a></li>
-        <li class="nav-item"><a class="nav-link" href="/otel-rezervasyon/login.php"><i class="bi bi-box-arrow-in-right"></i> Giriş</a></li>
-        <li class="nav-item"><a class="nav-link" href="/register.php"><i class="bi bi-person-plus"></i> Kayıt Ol</a></li>
+        <li class="nav-item"><a class="nav-link" href="/otel-rezervasyon/pages/rooms/odalar.php"><i class="bi bi-door-open"></i> Odalar</a></li>
+        <li class="nav-item"><a class="nav-link" href="/otel-rezervasyon/pages/reservation/rezervasyon.php"><i class="bi bi-calendar-check"></i> Rezervasyon</a></li>
+        <li class="nav-item"><a class="nav-link" href="/otel-rezervasyon/pages/auth/login.php"><i class="bi bi-box-arrow-in-right"></i> Giriş</a></li>
+        <li class="nav-item"><a class="nav-link" href="/otel-rezervasyon/pages/auth/register.php"><i class="bi bi-person-plus"></i> Kayıt Ol</a></li>
       </ul>
     </div>
   </div>
@@ -38,6 +39,14 @@ if (isset($_SESSION['errors'])) {
     echo '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
     echo '</div>';
     unset($_SESSION['errors']);
+}
+
+if (isset($_SESSION['error'])) {
+    echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">';
+    echo htmlspecialchars($_SESSION['error']);
+    echo '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
+    echo '</div>';
+    unset($_SESSION['error']);
 }
 
 if (isset($_SESSION['success'])) {

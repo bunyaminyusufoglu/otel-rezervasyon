@@ -10,5 +10,6 @@ try {
     ];
     $pdo = new PDO($dsn, $user, $pass, $options);
 } catch (PDOException $e) {
-    die('Veritabanı bağlantı hatası: ' . $e->getMessage());
-} 
+    die("Veritabanı bağlantı hatası: " . $e->getMessage());
+}
+?> 

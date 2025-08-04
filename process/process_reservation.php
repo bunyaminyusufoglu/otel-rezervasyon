@@ -1,6 +1,5 @@
 <?php
-session_start();
-require_once 'includes/db.php';
+require_once '../../includes/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $first_name = trim($_POST['first_name']);
@@ -82,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $total_price = $room['price'] * $nights;
 
                 // Kullanıcı ID'sini al (giriş yapmışsa)
-                $user_id = $_SESSION['user_id'] ?? null;
+                $user_id = $_SESSION['user_id'];
 
                 // Rezervasyon oluştur
                 $stmt = $pdo->prepare("INSERT INTO reservations (user_id, room_id, checkin_date, checkout_date, guests, total_price, special_requests) VALUES (?, (SELECT id FROM rooms WHERE type = ?), ?, ?, ?, ?, ?)");
@@ -91,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $reservation_id = $pdo->lastInsertId();
 
                 $_SESSION['success'] = "Rezervasyonunuz başarıyla oluşturuldu. Rezervasyon numaranız: #" . $reservation_id;
-                header("Location: reservation_success.php?id=" . $reservation_id);
+                header("Location: ../../pages/reservation/reservation_success.php?id=" . $reservation_id);
                 exit();
             }
         } catch (PDOException $e) {
@@ -102,11 +101,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!empty($errors)) {
         $_SESSION['errors'] = $errors;
         $_SESSION['form_data'] = $_POST;
-        header("Location: rezervasyon.php");
+        header("Location: ../../pages/reservation/rezervasyon.php");
         exit();
     }
 } else {
-    header("Location: rezervasyon.php");
+    header("Location: ../../pages/reservation/rezervasyon.php");
     exit();
 }
 ?> 

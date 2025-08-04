@@ -1,19 +1,4 @@
-<?php include 'includes/header.php'; ?>
-
-<!-- Hero Section -->
-<section class="bg-light py-5">
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-lg-6 text-center text-lg-start">
-        <h1 class="display-4 fw-bold mb-4 text-primary">Kayıt Ol</h1>
-        <p class="lead mb-4">Hemen ücretsiz hesap oluşturun ve rezervasyonlarınızı yönetin.</p>
-      </div>
-      <div class="col-lg-6 text-center mt-4 mt-lg-0">
-        <img src="assets/register-hero.jpg" alt="Kayıt" class="img-fluid rounded shadow">
-      </div>
-    </div>
-  </div>
-</section>
+<?php include '../../includes/header.php'; ?>
 
 <!-- Register Form -->
 <section class="py-5 bg-white">
@@ -25,7 +10,7 @@
             <h3 class="mb-0"><i class="bi bi-person-plus"></i> Yeni Hesap Oluştur</h3>
           </div>
           <div class="card-body p-4">
-            <form method="POST" action="process_register.php">
+            <form method="POST" action="../../process/process_register.php">
               <div class="row g-3">
                 <div class="col-md-6">
                   <label for="first_name" class="form-label">Ad *</label>

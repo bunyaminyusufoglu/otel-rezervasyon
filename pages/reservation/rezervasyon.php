@@ -1,4 +1,19 @@
-<?php include 'includes/header.php'; ?>
+<?php 
+include '../../includes/header.php'; 
+
+// Giriş kontrolü
+if (!isset($_SESSION['user_id'])) {
+    $_SESSION['error'] = "Rezervasyon yapmak için önce giriş yapmalısınız.";
+    header("Location: ../auth/login.php");
+    exit();
+}
+
+// Kullanıcı bilgilerini al
+require_once '../../includes/db.php';
+$stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
+$stmt->execute([$_SESSION['user_id']]);
+$user = $stmt->fetch();
+?>
 
 <!-- Hero Section -->
 <section class="bg-light py-5">
@@ -9,7 +24,7 @@
         <p class="lead mb-4">Hayalinizdeki oteli seçin ve hemen rezervasyon yapın.</p>
       </div>
       <div class="col-lg-6 text-center mt-4 mt-lg-0">
-        <img src="assets/reservation-hero.jpg" alt="Rezervasyon" class="img-fluid rounded shadow">
+        <img src="../../assets/reservation-hero.jpg" alt="Rezervasyon" class="img-fluid rounded shadow">
       </div>
     </div>
   </div>
@@ -25,7 +40,7 @@
             <h3 class="mb-0"><i class="bi bi-calendar-check"></i> Rezervasyon Formu</h3>
           </div>
           <div class="card-body p-4">
-            <form method="POST" action="process_reservation.php">
+            <form method="POST" action="../../process/process_reservation.php">
               <div class="row g-3">
                 <!-- Kişisel Bilgiler -->
                 <div class="col-12">
@@ -33,19 +48,19 @@
                 </div>
                 <div class="col-md-6">
                   <label for="first_name" class="form-label">Ad *</label>
-                  <input type="text" class="form-control" id="first_name" name="first_name" required>
+                  <input type="text" class="form-control" id="first_name" name="first_name" value="<?php echo htmlspecialchars($user['first_name']); ?>" required readonly>
                 </div>
                 <div class="col-md-6">
                   <label for="last_name" class="form-label">Soyad *</label>
-                  <input type="text" class="form-control" id="last_name" name="last_name" required>
+                  <input type="text" class="form-control" id="last_name" name="last_name" value="<?php echo htmlspecialchars($user['last_name']); ?>" required readonly>
                 </div>
                 <div class="col-md-6">
                   <label for="email" class="form-label">E-posta *</label>
-                  <input type="email" class="form-control" id="email" name="email" required>
+                  <input type="email" class="form-control" id="email" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" required readonly>
                 </div>
                 <div class="col-md-6">
                   <label for="phone" class="form-label">Telefon *</label>
-                  <input type="tel" class="form-control" id="phone" name="phone" required>
+                  <input type="tel" class="form-control" id="phone" name="phone" value="<?php echo htmlspecialchars($user['phone']); ?>" required readonly>
                 </div>
 
                 <!-- Rezervasyon Detayları -->
@@ -145,4 +160,4 @@
   </div>
 </section>
 
-<?php include 'includes/footer.php'; ?> 
+<?php include '../../includes/footer.php'; ?> 

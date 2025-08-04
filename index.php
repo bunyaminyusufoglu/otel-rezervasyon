@@ -7,7 +7,11 @@
       <div class="col-lg-6 text-center text-lg-start">
         <h1 class="display-4 fw-bold mb-4 text-primary">Hayalinizdeki Otel Sizi Bekliyor</h1>
         <p class="lead mb-4">Türkiye’nin en iyi otellerinde lüksü, konforu ve huzuru bir arada yaşayın.</p>
-        <a href="#reservation" class="btn btn-primary btn-lg px-4 rounded-pill">Rezervasyon Yap</a>
+        <?php if (isset($_SESSION['user_id'])): ?>
+          <a href="pages/reservation/rezervasyon.php" class="btn btn-primary btn-lg px-4 rounded-pill">Rezervasyon Yap</a>
+        <?php else: ?>
+          <a href="pages/auth/login.php" class="btn btn-primary btn-lg px-4 rounded-pill">Giriş Yap ve Rezervasyon Yap</a>
+        <?php endif; ?>
       </div>
       <div class="col-lg-6 text-center mt-4 mt-lg-0">
         <img src="assets/hotel-hero.jpg" alt="Otel Görseli" class="img-fluid rounded shadow">
@@ -83,89 +87,21 @@
 <section id="reservation" class="py-5 bg-white">
   <div class="container">
     <h2 class="text-center fw-bold mb-4">Rezervasyon Yap</h2>
-    <form class="row g-3">
-      <div class="col-md-6">
-        <label for="name" class="form-label">Adınız</label>
-        <input type="text" class="form-control" id="name" placeholder="Adınız">
+    <?php if (isset($_SESSION['user_id'])): ?>
+      <div class="text-center mb-4">
+        <p class="lead">Hoş geldiniz, <?php echo htmlspecialchars($_SESSION['user_name']); ?>!</p>
+        <a href="pages/reservation/rezervasyon.php" class="btn btn-primary btn-lg px-5">Rezervasyon Formuna Git</a>
       </div>
-      <div class="col-md-6">
-        <label for="email" class="form-label">E-posta</label>
-        <input type="email" class="form-control" id="email" placeholder="ornek@mail.com">
+    <?php else: ?>
+      <div class="text-center mb-4">
+        <p class="lead">Rezervasyon yapmak için önce giriş yapmalısınız.</p>
+        <a href="pages/auth/login.php" class="btn btn-primary btn-lg px-5 me-3">Giriş Yap</a>
+        <a href="pages/auth/register.php" class="btn btn-outline-primary btn-lg px-5">Kayıt Ol</a>
       </div>
-      <div class="col-md-6">
-        <label for="checkin" class="form-label">Giriş Tarihi</label>
-        <input type="date" class="form-control" id="checkin">
-      </div>
-      <div class="col-md-6">
-        <label for="checkout" class="form-label">Çıkış Tarihi</label>
-        <input type="date" class="form-control" id="checkout">
-      </div>
-      <div class="col-12 text-center mt-4">
-        <button type="submit" class="btn btn-primary btn-lg px-5">Rezervasyon Gönder</button>
-      </div>
-    </form>
+    <?php endif; ?>
   </div>
 </section>
 
-<!-- Testimonials -->
-<section class="bg-light py-5 text-center">
-  <div class="container">
-    <h2 class="fw-bold mb-4">Müşterilerimiz Ne Diyor?</h2>
-    <div class="row g-4">
-      <div class="col-md-4">
-        <blockquote class="blockquote">
-          <p class="mb-0">“Hızlı rezervasyon ve harika otel. Teşekkür ederim!”</p>
-          <footer class="blockquote-footer">Zeynep A.</footer>
-        </blockquote>
-      </div>
-      <div class="col-md-4">
-        <blockquote class="blockquote">
-          <p class="mb-0">“Kıbrıs tatilimiz harika geçti. Siteyi çok beğendik.”</p>
-          <footer class="blockquote-footer">Murat B.</footer>
-        </blockquote>
-      </div>
-      <div class="col-md-4">
-        <blockquote class="blockquote">
-          <p class="mb-0">“Her şey çok kolay ve güvenliydi. Tavsiye ederim.”</p>
-          <footer class="blockquote-footer">Selin K.</footer>
-        </blockquote>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section class="py-5 bg-white">
-  <div class="container">
-    <h2 class="fw-bold text-center mb-4">Sık Sorulan Sorular</h2>
-    <div class="accordion" id="faqAccordion">
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="headingOne">
-          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
-            Rezervasyon iptal koşulları nelerdir?
-          </button>
-        </h2>
-        <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
-          <div class="accordion-body">
-            Rezervasyon iptalleri, giriş tarihinden 3 gün öncesine kadar ücretsizdir.
-          </div>
-        </div>
-      </div>
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="headingTwo">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
-            Ödeme yöntemleri nelerdir?
-          </button>
-        </h2>
-        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-          <div class="accordion-body">
-            Kredi kartı, banka kartı ve Havale/EFT ile ödeme yapılabilir.
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- Contact -->
 <section class="py-5 bg-light">

@@ -1,19 +1,4 @@
-<?php include 'includes/header.php'; ?>
-
-<!-- Hero Section -->
-<section class="bg-light py-5">
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-lg-6 text-center text-lg-start">
-        <h1 class="display-4 fw-bold mb-4 text-primary">Giriş Yap</h1>
-        <p class="lead mb-4">Hesabınıza giriş yaparak rezervasyonlarınızı yönetin.</p>
-      </div>
-      <div class="col-lg-6 text-center mt-4 mt-lg-0">
-        <img src="assets/login-hero.jpg" alt="Giriş" class="img-fluid rounded shadow">
-      </div>
-    </div>
-  </div>
-</section>
+<?php include '../../includes/header.php'; ?>
 
 <!-- Login Form -->
 <section class="py-5 bg-white">
@@ -25,7 +10,7 @@
             <h3 class="mb-0"><i class="bi bi-box-arrow-in-right"></i> Giriş Yap</h3>
           </div>
           <div class="card-body p-4">
-            <form method="POST" action="process_login.php">
+            <form method="POST" action="../../process/process_login.php">
               <div class="mb-3">
                 <label for="email" class="form-label">E-posta</label>
                 <input type="email" class="form-control" id="email" name="email" required>
@@ -63,4 +48,4 @@
   </div>
 </section>
 
-<?php include 'includes/footer.php'; ?> 
+<?php include '../../includes/footer.php'; ?> 
