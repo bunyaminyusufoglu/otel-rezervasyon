@@ -10,7 +10,7 @@
         <a href="#room-list" class="btn btn-primary btn-lg px-4 rounded-pill">Odaları İncele</a>
       </div>
       <div class="col-lg-6 text-center mt-4 mt-lg-0">
-        <img src="../../assets/rooms-hero.jpg" alt="Oda Görseli" class="img-fluid rounded shadow">
+        <img src="../../assets/images/rooms-hero.jpg" alt="Oda Görseli" class="img-fluid rounded shadow">
       </div>
     </div>
   </div>
@@ -53,7 +53,7 @@
       <!-- Standart Oda -->
       <div class="col-md-6 col-lg-4">
         <div class="card shadow-sm h-100">
-          <img src="../../assets/room-standard.jpg" class="card-img-top" alt="Standart Oda">
+          <img src="../../assets/images/room-standard.jpg" class="card-img-top" alt="Standart Oda">
           <div class="card-body d-flex flex-column">
             <h5 class="card-title">Standart Oda</h5>
             <p class="card-text">25m² alanında, şehir manzaralı, konforlu konaklama imkanı.</p>
@@ -74,7 +74,7 @@
       <!-- Deluxe Oda -->
       <div class="col-md-6 col-lg-4">
         <div class="card shadow-sm h-100">
-          <img src="../../assets/room-deluxe.jpg" class="card-img-top" alt="Deluxe Oda">
+          <img src="../../assets/images/room-deluxe.jpg" class="card-img-top" alt="Deluxe Oda">
           <div class="card-body d-flex flex-column">
             <h5 class="card-title">Deluxe Oda</h5>
             <p class="card-text">35m² alanında, deniz manzaralı, lüks donanımlı oda.</p>
@@ -97,7 +97,7 @@
       <!-- Suite -->
       <div class="col-md-6 col-lg-4">
         <div class="card shadow-sm h-100">
-          <img src="../../assets/room-suite.jpg" class="card-img-top" alt="Suite">
+          <img src="../../assets/images/room-suite.jpg" class="card-img-top" alt="Suite">
           <div class="card-body d-flex flex-column">
             <h5 class="card-title">Suite</h5>
             <p class="card-text">50m² alanında, en üst düzey konfor ve özel hizmetler.</p>
@@ -121,7 +121,7 @@
       <!-- Aile Odası -->
       <div class="col-md-6 col-lg-4">
         <div class="card shadow-sm h-100">
-          <img src="../../assets/room-family.jpg" class="card-img-top" alt="Aile Odası">
+          <img src="../../assets/images/room-family.jpg" class="card-img-top" alt="Aile Odası">
           <div class="card-body d-flex flex-column">
             <h5 class="card-title">Aile Odası</h5>
             <p class="card-text">40m² alanında, geniş aileler için ideal konaklama.</p>
@@ -144,7 +144,7 @@
       <!-- Ekonomik Oda -->
       <div class="col-md-6 col-lg-4">
         <div class="card shadow-sm h-100">
-          <img src="../../assets/room-economy.jpg" class="card-img-top" alt="Ekonomik Oda">
+          <img src="../../assets/images/room-economy.jpg" class="card-img-top" alt="Ekonomik Oda">
           <div class="card-body d-flex flex-column">
             <h5 class="card-title">Ekonomik Oda</h5>
             <p class="card-text">20m² alanında, bütçe dostu konaklama seçeneği.</p>
@@ -165,7 +165,7 @@
       <!-- Premium Suite -->
       <div class="col-md-6 col-lg-4">
         <div class="card shadow-sm h-100">
-          <img src="../../assets/room-premium.jpg" class="card-img-top" alt="Premium Suite">
+          <img src="../../assets/images/room-premium.jpg" class="card-img-top" alt="Premium Suite">
           <div class="card-body d-flex flex-column">
             <h5 class="card-title">Premium Suite</h5>
             <p class="card-text">70m² alanında, en lüks konaklama deneyimi.</p>
@@ -246,7 +246,7 @@
   <div class="container">
     <h2 class="fw-bold mb-3">Hemen Rezervasyon Yapın</h2>
     <p class="lead mb-4">En uygun fiyatlarla hayalinizdeki odayı rezerve edin.</p>
-    <a href="/otel-rezervasyon/pages/reservation/rezervasyon.php" class="btn btn-light btn-lg px-4 rounded-pill">Rezervasyon Yap</a>
+    <a href="../../pages/reservation/rezervasyon.php" class="btn btn-light btn-lg px-4 rounded-pill">Rezervasyon Yap</a>
   </div>
 </section>
 

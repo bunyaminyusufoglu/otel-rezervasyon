@@ -14,7 +14,7 @@
         <?php endif; ?>
       </div>
       <div class="col-lg-6 text-center mt-4 mt-lg-0">
-        <img src="assets/hotel-hero.jpg" alt="Otel Görseli" class="img-fluid rounded shadow">
+        <img src="assets\images\hotel-hero.jpg" alt="Otel Görseli" class="img-fluid rounded shadow">
       </div>
     </div>
   </div>
@@ -51,7 +51,7 @@
     <div class="row g-4">
       <div class="col-md-4">
         <div class="card shadow-sm">
-          <img src="assets/hotel1.jpg" class="card-img-top" alt="Hotel 1">
+          <img src="assets\images\hotel1.jpg" class="card-img-top" alt="Hotel 1">
           <div class="card-body">
             <h5 class="card-title">İstanbul Şehir Oteli</h5>
             <p class="card-text">Tarihi yarımadaya yürüme mesafesinde, lüks konaklama imkanı.</p>
@@ -61,7 +61,7 @@
       </div>
       <div class="col-md-4">
         <div class="card shadow-sm">
-          <img src="assets/hotel2.jpg" class="card-img-top" alt="Hotel 2">
+          <img src="assets\images\hotel2.jpg" class="card-img-top" alt="Hotel 2">
           <div class="card-body">
             <h5 class="card-title">Antalya Resort</h5>
             <p class="card-text">Denize sıfır, her şey dahil konseptiyle unutulmaz bir tatil.</p>
@@ -71,7 +71,7 @@
       </div>
       <div class="col-md-4">
         <div class="card shadow-sm">
-          <img src="assets/hotel3.jpg" class="card-img-top" alt="Hotel 3">
+          <img src="assets\images\hotel3.jpg" class="card-img-top" alt="Hotel 3">
           <div class="card-body">
             <h5 class="card-title">Kapadokya Cave Hotel</h5>
             <p class="card-text">Doğal taş odalarda eşsiz bir konaklama deneyimi.</p>

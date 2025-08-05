@@ -1,5 +1,6 @@
 <?php
-require_once '../../includes/db.php';
+session_start();
+require_once '../includes/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $first_name = trim($_POST['first_name']);
@@ -64,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt->execute([$first_name, $last_name, $email, $phone, $hashed_password, $address, $newsletter]);
             
             $_SESSION['success'] = "Hesabınız başarıyla oluşturuldu. Şimdi giriş yapabilirsiniz.";
-            header("Location: ../../pages/auth/login.php");
+            header("Location: ../pages/auth/login.php");
             exit();
         } catch (PDOException $e) {
             $errors[] = "Kayıt sırasında bir hata oluştu: " . $e->getMessage();
@@ -74,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!empty($errors)) {
         $_SESSION['errors'] = $errors;
         $_SESSION['form_data'] = $_POST;
-        header("Location: ../../pages/auth/register.php");
+        header("Location: ../pages/auth/register.php");
         exit();
     }
 } else {

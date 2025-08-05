@@ -7,8 +7,8 @@
     <title>Otel Rezervasyon</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="assets/css/style.css" rel="stylesheet">
-</head>
+    <link href="/otel-rezervasyon/assets/css/style.css" rel="stylesheet">
+</head> 
 <body>
 <nav class="navbar navbar-expand-lg navbar-gradient mb-4">
   <div class="container">
@@ -23,8 +23,22 @@
         <li class="nav-item"><a class="nav-link" href="/otel-rezervasyon/index.php"><i class="bi bi-house-door"></i> Ana Sayfa</a></li>
         <li class="nav-item"><a class="nav-link" href="/otel-rezervasyon/pages/rooms/odalar.php"><i class="bi bi-door-open"></i> Odalar</a></li>
         <li class="nav-item"><a class="nav-link" href="/otel-rezervasyon/pages/reservation/rezervasyon.php"><i class="bi bi-calendar-check"></i> Rezervasyon</a></li>
-        <li class="nav-item"><a class="nav-link" href="/otel-rezervasyon/pages/auth/login.php"><i class="bi bi-box-arrow-in-right"></i> Giriş</a></li>
-        <li class="nav-item"><a class="nav-link" href="/otel-rezervasyon/pages/auth/register.php"><i class="bi bi-person-plus"></i> Kayıt Ol</a></li>
+        <?php if (isset($_SESSION['user_id'])): ?>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+              <i class="bi bi-person-circle"></i> <?php echo htmlspecialchars($_SESSION['user_name']); ?>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/otel-rezervasyon/pages/auth/profile.php"><i class="bi bi-person"></i> Profilim</a></li>
+              <li><a class="dropdown-item" href="/otel-rezervasyon/pages/reservation/rezervasyon.php"><i class="bi bi-calendar-plus"></i> Yeni Rezervasyon</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="/otel-rezervasyon/process/process_logout.php"><i class="bi bi-box-arrow-right"></i> Çıkış Yap</a></li>
+            </ul>
+          </li>
+        <?php else: ?>
+          <li class="nav-item"><a class="nav-link" href="/otel-rezervasyon/pages/auth/login.php"><i class="bi bi-box-arrow-in-right"></i> Giriş</a></li>
+          <li class="nav-item"><a class="nav-link" href="/otel-rezervasyon/pages/auth/register.php"><i class="bi bi-person-plus"></i> Kayıt Ol</a></li>
+        <?php endif; ?>
       </ul>
     </div>
   </div>
