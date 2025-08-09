@@ -8,6 +8,13 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
+// Admin engeli
+if (($_SESSION['user_role'] ?? 'customer') === 'admin') {
+    $_SESSION['error'] = "Yöneticiler rezervasyon oluşturamaz. Lütfen müşteri hesabı ile giriş yapın.";
+    header("Location: ../admin/reservations.php");
+    exit();
+}
+
 // Kullanıcı bilgilerini al
 require_once '../../includes/db.php';
 $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");

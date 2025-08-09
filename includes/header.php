@@ -22,15 +22,23 @@
       <ul class="navbar-nav ms-auto">
         <li class="nav-item"><a class="nav-link" href="/otel-rezervasyon/index.php"><i class="bi bi-house-door"></i> Ana Sayfa</a></li>
         <li class="nav-item"><a class="nav-link" href="/otel-rezervasyon/pages/rooms/odalar.php"><i class="bi bi-door-open"></i> Odalar</a></li>
-        <li class="nav-item"><a class="nav-link" href="/otel-rezervasyon/pages/reservation/rezervasyon.php"><i class="bi bi-calendar-check"></i> Rezervasyon</a></li>
+        <?php if (($_SESSION['user_role'] ?? 'customer') !== 'admin'): ?>
+          <li class="nav-item"><a class="nav-link" href="/otel-rezervasyon/pages/reservation/rezervasyon.php"><i class="bi bi-calendar-check"></i> Rezervasyon</a></li>
+        <?php endif; ?>
         <?php if (isset($_SESSION['user_id'])): ?>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
               <i class="bi bi-person-circle"></i> <?php echo htmlspecialchars($_SESSION['user_name']); ?>
             </a>
             <ul class="dropdown-menu">
+              <?php if (($_SESSION['user_role'] ?? 'customer') === 'admin'): ?>
+                <li><a class="dropdown-item" href="/otel-rezervasyon/pages/admin/reservations.php"><i class="bi bi-speedometer2"></i> Yönetim</a></li>
+                <li><hr class="dropdown-divider"></li>
+              <?php endif; ?>
               <li><a class="dropdown-item" href="/otel-rezervasyon/pages/auth/profile.php"><i class="bi bi-person"></i> Profilim</a></li>
-              <li><a class="dropdown-item" href="/otel-rezervasyon/pages/reservation/rezervasyon.php"><i class="bi bi-calendar-plus"></i> Yeni Rezervasyon</a></li>
+              <?php if (($_SESSION['user_role'] ?? 'customer') !== 'admin'): ?>
+                <li><a class="dropdown-item" href="/otel-rezervasyon/pages/reservation/rezervasyon.php"><i class="bi bi-calendar-plus"></i> Yeni Rezervasyon</a></li>
+              <?php endif; ?>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="/otel-rezervasyon/process/process_logout.php"><i class="bi bi-box-arrow-right"></i> Çıkış Yap</a></li>
             </ul>

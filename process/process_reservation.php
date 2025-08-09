@@ -3,6 +3,13 @@ session_start();
 require_once '../includes/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Admin engeli
+    if (($_SESSION['user_role'] ?? 'customer') === 'admin') {
+        $_SESSION['error'] = 'Yöneticiler rezervasyon oluşturamaz.';
+        header('Location: ../pages/admin/reservations.php');
+        exit();
+    }
+
     $first_name = trim($_POST['first_name']);
     $last_name = trim($_POST['last_name']);
     $email = trim($_POST['email']);
@@ -84,13 +91,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 // Kullanıcı ID'sini al (giriş yapmışsa)
                 $user_id = $_SESSION['user_id'];
 
-                // Rezervasyon oluştur
-                $stmt = $pdo->prepare("INSERT INTO reservations (user_id, room_id, checkin_date, checkout_date, guests, total_price, special_requests) VALUES (?, (SELECT id FROM rooms WHERE type = ?), ?, ?, ?, ?, ?)");
+                // Rezervasyon oluştur (status: pending)
+                $stmt = $pdo->prepare("INSERT INTO reservations (user_id, room_id, checkin_date, checkout_date, guests, total_price, special_requests, status) VALUES (?, (SELECT id FROM rooms WHERE type = ?), ?, ?, ?, ?, ?, 'pending')");
                 $stmt->execute([$user_id, $room_type, $checkin_date, $checkout_date, $guests, $total_price, $special_requests]);
 
                 $reservation_id = $pdo->lastInsertId();
 
-                $_SESSION['success'] = "Rezervasyonunuz başarıyla oluşturuldu. Rezervasyon numaranız: #" . $reservation_id;
+                $_SESSION['success'] = "Rezervasyonunuz oluşturuldu ve yönetici onayını bekliyor. No: #" . $reservation_id;
                 header("Location: ../pages/reservation/reservation_success.php?id=" . $reservation_id);
                 exit();
             }
