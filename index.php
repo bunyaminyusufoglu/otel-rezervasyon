@@ -51,31 +51,31 @@
     <div class="row g-4">
       <div class="col-md-4">
         <div class="card shadow-sm">
-          <img src="assets\images\hotel1.jpg" class="card-img-top" alt="Hotel 1">
+          <img src="assets/images/room-deluxe.jpg" class="card-img-top" alt="İstanbul Şehir Oteli">
           <div class="card-body">
             <h5 class="card-title">İstanbul Şehir Oteli</h5>
             <p class="card-text">Tarihi yarımadaya yürüme mesafesinde, lüks konaklama imkanı.</p>
-            <a href="#" class="btn btn-outline-primary">Detaylar</a>
+            <a href="pages/rooms/odalar.php" class="btn btn-outline-primary">Detaylar</a>
           </div>
         </div>
       </div>
       <div class="col-md-4">
         <div class="card shadow-sm">
-          <img src="assets\images\hotel2.jpg" class="card-img-top" alt="Hotel 2">
+          <img src="assets/images/room-suite.jpg" class="card-img-top" alt="Antalya Resort">
           <div class="card-body">
             <h5 class="card-title">Antalya Resort</h5>
             <p class="card-text">Denize sıfır, her şey dahil konseptiyle unutulmaz bir tatil.</p>
-            <a href="#" class="btn btn-outline-primary">Detaylar</a>
+            <a href="pages/rooms/odalar.php" class="btn btn-outline-primary">Detaylar</a>
           </div>
         </div>
       </div>
       <div class="col-md-4">
         <div class="card shadow-sm">
-          <img src="assets\images\hotel3.jpg" class="card-img-top" alt="Hotel 3">
+          <img src="assets/images/room-premium.jpg" class="card-img-top" alt="Kapadokya Cave Hotel">
           <div class="card-body">
             <h5 class="card-title">Kapadokya Cave Hotel</h5>
             <p class="card-text">Doğal taş odalarda eşsiz bir konaklama deneyimi.</p>
-            <a href="#" class="btn btn-outline-primary">Detaylar</a>
+            <a href="pages/rooms/odalar.php" class="btn btn-outline-primary">Detaylar</a>
           </div>
         </div>
       </div>

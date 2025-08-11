@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once '../includes/db.php';
+require_once '../includes/ReservationHelper.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Admin engeli
@@ -62,6 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $checkin = new DateTime($checkin_date);
         $checkout = new DateTime($checkout_date);
         $today = new DateTime();
+        $today->setTime(0, 0, 0); // Bugünün başlangıcı
 
         if ($checkin < $today) {
             $errors[] = "Giriş tarihi bugünden önce olamaz.";
@@ -70,36 +72,85 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($checkout <= $checkin) {
             $errors[] = "Çıkış tarihi giriş tarihinden sonra olmalıdır.";
         }
+
+        // Maksimum konaklama süresi kontrolü (30 gün)
+        $max_stay = $checkin->diff($checkout)->days;
+        if ($max_stay > 30) {
+            $errors[] = "Maksimum konaklama süresi 30 gündür.";
+        }
     }
 
     if (empty($errors)) {
         try {
-            // Oda fiyatını al
-            $stmt = $pdo->prepare("SELECT price FROM rooms WHERE type = ?");
-            $stmt->execute([$room_type]);
-            $room = $stmt->fetch();
-
-            if (!$room) {
-                $errors[] = "Seçilen oda tipi bulunamadı.";
-            } else {
-                // Geceleri hesapla
-                $checkin = new DateTime($checkin_date);
-                $checkout = new DateTime($checkout_date);
-                $nights = $checkin->diff($checkout)->days;
-                $total_price = $room['price'] * $nights;
-
-                // Kullanıcı ID'sini al (giriş yapmışsa)
-                $user_id = $_SESSION['user_id'];
-
-                // Rezervasyon oluştur (status: pending)
-                $stmt = $pdo->prepare("INSERT INTO reservations (user_id, room_id, checkin_date, checkout_date, guests, total_price, special_requests, status) VALUES (?, (SELECT id FROM rooms WHERE type = ?), ?, ?, ?, ?, ?, 'pending')");
-                $stmt->execute([$user_id, $room_type, $checkin_date, $checkout_date, $guests, $total_price, $special_requests]);
-
-                $reservation_id = $pdo->lastInsertId();
-
-                $_SESSION['success'] = "Rezervasyonunuz oluşturuldu ve yönetici onayını bekliyor. No: #" . $reservation_id;
-                header("Location: ../pages/reservation/reservation_success.php?id=" . $reservation_id);
-                exit();
+            $reservationHelper = new ReservationHelper($pdo);
+            
+            // 1. Oda müsaitlik kontrolü
+            $availability = $reservationHelper->checkRoomAvailability($room_type, $checkin_date, $checkout_date);
+            if (!$availability['available']) {
+                $errors[] = $availability['message'];
+            }
+            
+            // 2. Kullanıcının mevcut rezervasyonları ile çakışma kontrolü
+            $user_id = $_SESSION['user_id'];
+            $existing_reservations = $reservationHelper->checkUserReservations($user_id, $checkin_date, $checkout_date);
+            if ($existing_reservations > 0) {
+                $errors[] = "Seçilen tarihlerde zaten bir rezervasyonunuz bulunmaktadır.";
+            }
+            
+            // 3. Dinamik fiyat hesaplama
+            $price_calculation = $reservationHelper->calculatePrice($room_type, $checkin_date, $checkout_date);
+            if (!$price_calculation['success']) {
+                $errors[] = $price_calculation['message'];
+            }
+            
+            if (empty($errors)) {
+                // Oda ID'sini al
+                $stmt = $pdo->prepare("SELECT id FROM rooms WHERE type = ?");
+                $stmt->execute([$room_type]);
+                $room = $stmt->fetch();
+                
+                if (!$room) {
+                    $errors[] = "Seçilen oda tipi bulunamadı.";
+                } else {
+                    $room_id = $room['id'];
+                    $total_price = $price_calculation['total_price'];
+                    $nights = $price_calculation['nights'];
+                    
+                    // Rezervasyon oluştur
+                    $stmt = $pdo->prepare("INSERT INTO reservations (user_id, room_id, checkin_date, checkout_date, guests, total_price, special_requests, status) VALUES (?, ?, ?, ?, ?, ?, ?, 'pending')");
+                    $stmt->execute([$user_id, $room_id, $checkin_date, $checkout_date, $guests, $total_price, $special_requests]);
+                    
+                    $reservation_id = $pdo->lastInsertId();
+                    
+                    // 4. Rezervasyon onay e-postası gönder
+                    $reservation_data = [
+                        'id' => $reservation_id,
+                        'room_type' => $room_type,
+                        'checkin_date' => $checkin_date,
+                        'checkout_date' => $checkout_date,
+                        'guests' => $guests,
+                        'total_price' => $total_price
+                    ];
+                    
+                    $email_result = $reservationHelper->sendConfirmationEmail($email, $first_name . ' ' . $last_name, $reservation_data);
+                    
+                    // Başarı mesajı
+                    $success_message = "Rezervasyonunuz başarıyla oluşturuldu! No: #" . $reservation_id;
+                    
+                    if ($nights >= 7) {
+                        $success_message .= " (7+ gece konaklama için %10 indirim uygulandı)";
+                    }
+                    
+                    if ($email_result['success']) {
+                        $success_message .= " Onay e-postası gönderildi.";
+                    } else {
+                        $success_message .= " E-posta gönderilemedi: " . $email_result['message'];
+                    }
+                    
+                    $_SESSION['success'] = $success_message;
+                    header("Location: ../pages/reservation/reservation_success.php?id=" . $reservation_id);
+                    exit();
+                }
             }
         } catch (PDOException $e) {
             $errors[] = "Rezervasyon sırasında bir hata oluştu: " . $e->getMessage();
@@ -113,7 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
 } else {
-    header("Location: ../../pages/reservation/rezervasyon.php");
+    header("Location: ../pages/reservation/rezervasyon.php");
     exit();
 }
 ?> 

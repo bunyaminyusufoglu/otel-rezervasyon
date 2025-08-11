@@ -105,12 +105,17 @@ $reservations = $stmt->fetchAll();
                     <form method="POST" action="../../process/process_reservation_status.php" class="d-inline ms-1">
                       <input type="hidden" name="reservation_id" value="<?php echo (int)$res['id']; ?>">
                       <input type="hidden" name="action" value="confirm">
-                      <button class="btn btn-sm btn-success" <?php echo $res['status']!=='pending' ? 'disabled' : ''; ?>>Onayla</button>
+                      <button class="btn btn-sm btn-success" <?php echo $res['status']!=='pending' ? 'disabled' : ''; ?>><i class="bi bi-check-circle"></i> Onayla</button>
+                    </form>
+                    <form method="POST" action="../../process/process_reservation_status.php" class="d-inline ms-1">
+                      <input type="hidden" name="reservation_id" value="<?php echo (int)$res['id']; ?>">
+                      <input type="hidden" name="action" value="complete">
+                      <button class="btn btn-sm btn-info" <?php echo $res['status']!=='confirmed' ? 'disabled' : ''; ?>><i class="bi bi-check2-all"></i> Tamamla</button>
                     </form>
                     <form method="POST" action="../../process/process_reservation_status.php" class="d-inline ms-1">
                       <input type="hidden" name="reservation_id" value="<?php echo (int)$res['id']; ?>">
                       <input type="hidden" name="action" value="cancel">
-                      <button class="btn btn-sm btn-outline-danger" <?php echo in_array($res['status'],['cancelled','completed'],true) ? 'disabled' : ''; ?>>İptal Et</button>
+                      <button class="btn btn-sm btn-outline-danger" <?php echo in_array($res['status'],['cancelled','completed'],true) ? 'disabled' : ''; ?>><i class="bi bi-x-circle"></i> İptal Et</button>
                     </form>
                   </td>
                 </tr>
