@@ -12,7 +12,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-gradient mb-4">
   <div class="container">
-    <a class="navbar-brand" href="/otel-rezervasyon/index.php">
+    <a class="navbar-brand" href="<?php echo ($_SESSION['user_role'] ?? 'customer') === 'admin' ? '/otel-rezervasyon/pages/admin/dashboard.php' : '/otel-rezervasyon/index.php'; ?>">
       <i class="bi bi-building"></i> Otel Rezervasyon
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,7 +20,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="/otel-rezervasyon/index.php"><i class="bi bi-house-door"></i> Ana Sayfa</a></li>
+        <li class="nav-item"><a class="nav-link" href="<?php echo ($_SESSION['user_role'] ?? 'customer') === 'admin' ? '/otel-rezervasyon/pages/admin/dashboard.php' : '/otel-rezervasyon/index.php'; ?>"><i class="bi bi-house-door"></i> <?php echo ($_SESSION['user_role'] ?? 'customer') === 'admin' ? 'Dashboard' : 'Ana Sayfa'; ?></a></li>
         <li class="nav-item"><a class="nav-link" href="/otel-rezervasyon/pages/rooms/odalar.php"><i class="bi bi-door-open"></i> Odalar</a></li>
         <?php if (($_SESSION['user_role'] ?? 'customer') !== 'admin'): ?>
           <li class="nav-item"><a class="nav-link" href="/otel-rezervasyon/pages/reservation/rezervasyon.php"><i class="bi bi-calendar-check"></i> Rezervasyon</a></li>
@@ -32,7 +32,8 @@
             </a>
             <ul class="dropdown-menu">
               <?php if (($_SESSION['user_role'] ?? 'customer') === 'admin'): ?>
-                <li><a class="dropdown-item" href="/otel-rezervasyon/pages/admin/reservations.php"><i class="bi bi-speedometer2"></i> Yönetim</a></li>
+                <li><a class="dropdown-item" href="/otel-rezervasyon/pages/admin/reservations.php"><i class="bi bi-calendar-check"></i> Rezervasyon Yönetimi</a></li>
+                <li><a class="dropdown-item" href="/otel-rezervasyon/pages/admin/users.php"><i class="bi bi-people"></i> Kullanıcı Yönetimi</a></li>
                 <li><hr class="dropdown-divider"></li>
               <?php endif; ?>
               <li><a class="dropdown-item" href="/otel-rezervasyon/pages/auth/profile.php"><i class="bi bi-person"></i> Profilim</a></li>

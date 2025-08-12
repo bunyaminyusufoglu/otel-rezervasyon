@@ -32,7 +32,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     }
 
                     $_SESSION['success'] = "Hoş geldiniz, " . $user['first_name'] . "!";
-                    header("Location: ../index.php");
+                    
+                    // Admin kullanıcıları dashboard'a, normal kullanıcıları ana sayfaya yönlendir
+                    if (($user['role'] ?? 'customer') === 'admin') {
+                        header("Location: ../pages/admin/dashboard.php");
+                    } else {
+                        header("Location: ../index.php");
+                    }
                     exit();
                 } else {
                     $errors[] = "Şifre hatalı.";

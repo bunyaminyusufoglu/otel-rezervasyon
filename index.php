@@ -1,4 +1,14 @@
-<?php include 'includes/header.php'; ?>
+<?php 
+session_start();
+
+// Admin kullanıcıları dashboard'a yönlendir
+if (isset($_SESSION['user_id']) && ($_SESSION['user_role'] ?? 'customer') === 'admin') {
+    header('Location: pages/admin/dashboard.php');
+    exit();
+}
+
+include 'includes/header.php'; 
+?>
 
 <!-- Hero Section -->
 <section class="bg-light py-5">

@@ -32,7 +32,7 @@ $reservations = $stmt->fetchAll();
 <section class="py-4">
   <div class="container">
     <div class="d-flex align-items-center justify-content-between mb-3">
-      <h1 class="h3 mb-0"><i class="bi bi-speedometer2"></i> Rezervasyon Yönetimi</h1>
+      <h1 class="h3 mb-0"><i class="bi bi-calendar-check"></i> Rezervasyon Yönetimi</h1>
       <div>
         <a href="?" class="btn btn-sm btn-outline-secondary">Tümü</a>
         <a href="?status=pending" class="btn btn-sm btn-outline-warning">Beklemede</a>
