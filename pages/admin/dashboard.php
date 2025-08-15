@@ -161,7 +161,7 @@ try {
                 </a>
               </div>
               <div class="col-md-3 mb-3">
-                <a href="../rooms/odalar.php" class="btn btn-outline-info btn-lg w-100 h-100 d-flex flex-column align-items-center justify-content-center">
+                <a href="rooms.php" class="btn btn-outline-info btn-lg w-100 h-100 d-flex flex-column align-items-center justify-content-center">
                   <i class="bi bi-door-open display-6 mb-2"></i>
                   <span>Oda Yönetimi</span>
                 </a>

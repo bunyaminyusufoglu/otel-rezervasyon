@@ -1,4 +1,4 @@
-<?php session_start(); ?>
+<?php if (!session_id()) session_start(); ?>
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -33,6 +33,7 @@
             <ul class="dropdown-menu">
               <?php if (($_SESSION['user_role'] ?? 'customer') === 'admin'): ?>
                 <li><a class="dropdown-item" href="/otel-rezervasyon/pages/admin/reservations.php"><i class="bi bi-calendar-check"></i> Rezervasyon Yönetimi</a></li>
+                <li><a class="dropdown-item" href="/otel-rezervasyon/pages/admin/rooms.php"><i class="bi bi-door-open"></i> Oda Yönetimi</a></li>
                 <li><a class="dropdown-item" href="/otel-rezervasyon/pages/admin/users.php"><i class="bi bi-people"></i> Kullanıcı Yönetimi</a></li>
                 <li><hr class="dropdown-divider"></li>
               <?php endif; ?>

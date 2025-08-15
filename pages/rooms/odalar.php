@@ -1,4 +1,5 @@
 <?php include '../../includes/header.php'; ?>
+<?php require_once '../../includes/db.php'; ?>
 
 <!-- Hero Section -->
 <section class="bg-light py-5">
@@ -45,147 +46,73 @@
   </div>
 </section>
 
-<!-- Room List -->
+<!-- Room List (Dynamic) -->
 <section id="room-list" class="py-5 bg-light">
   <div class="container">
     <h2 class="fw-bold text-center mb-4">Mevcut Odalar</h2>
+    <?php
+      try {
+        $stmt = $pdo->prepare("SELECT id, name, type, description, price, capacity, amenities, image, status FROM rooms ORDER BY price ASC");
+        $stmt->execute();
+        $rooms = $stmt->fetchAll();
+      } catch (PDOException $e) {
+        $rooms = [];
+        echo '<p class="text-danger text-center">Odalar yüklenirken bir hata oluştu.</p>';
+      }
+
+      $typeToImage = [
+        'standard' => 'room-standard.jpg',
+        'deluxe'   => 'room-deluxe.jpg',
+        'suite'    => 'room-suite.jpg',
+        'family'   => 'room-family.jpg',
+        'economy'  => 'room-economy.jpg',
+        'premium'  => 'room-premium.jpg',
+      ];
+    ?>
+
     <div class="row g-4">
-      <!-- Standart Oda -->
-      <div class="col-md-6 col-lg-4">
-        <div class="card shadow-sm h-100">
-          <img src="../../assets/images/room-standard.jpg" class="card-img-top" alt="Standart Oda">
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title">Standart Oda</h5>
-            <p class="card-text">25m² alanında, şehir manzaralı, konforlu konaklama imkanı.</p>
-            <ul class="list-unstyled mb-3">
-              <li><i class="bi bi-check-circle text-success"></i> 1 Yatak Odası</li>
-              <li><i class="bi bi-check-circle text-success"></i> Özel Banyo</li>
-              <li><i class="bi bi-check-circle text-success"></i> Klima</li>
-              <li><i class="bi bi-check-circle text-success"></i> Ücretsiz Wi-Fi</li>
-            </ul>
-            <div class="mt-auto">
-              <p class="text-primary fw-bold mb-2">₺500/gece</p>
-              <a href="#" class="btn btn-outline-primary">Rezervasyon Yap</a>
-            </div>
-          </div>
+      <?php if (empty($rooms)): ?>
+        <div class="col-12">
+          <div class="alert alert-info text-center mb-0">Şu anda görüntülenecek oda bulunmuyor.</div>
         </div>
-      </div>
+      <?php else: ?>
+        <?php foreach ($rooms as $room): ?>
+          <?php
+            $type = $room['type'];
+            $image = trim($room['image'] ?? '');
+            $imagePath = '../../' . ($image !== '' ? $image : ('assets/images/' . ($typeToImage[$type] ?? 'room-standard.jpg')));
+            $isAvailable = ($room['status'] ?? 'available') === 'available';
+            $amenities = array_filter(array_map('trim', explode(',', (string)($room['amenities'] ?? ''))));
+            $amenities = array_slice($amenities, 0, 6);
+          ?>
+          <div class="col-md-6 col-lg-4">
+            <div class="card shadow-sm h-100">
+              <img src="<?php echo htmlspecialchars($imagePath); ?>" class="card-img-top" alt="<?php echo htmlspecialchars($room['name']); ?>">
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title"><?php echo htmlspecialchars($room['name']); ?></h5>
+                <p class="card-text"><?php echo htmlspecialchars($room['description'] ?? ''); ?></p>
 
-      <!-- Deluxe Oda -->
-      <div class="col-md-6 col-lg-4">
-        <div class="card shadow-sm h-100">
-          <img src="../../assets/images/room-deluxe.jpg" class="card-img-top" alt="Deluxe Oda">
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title">Deluxe Oda</h5>
-            <p class="card-text">35m² alanında, deniz manzaralı, lüks donanımlı oda.</p>
-            <ul class="list-unstyled mb-3">
-              <li><i class="bi bi-check-circle text-success"></i> 1 Yatak Odası</li>
-              <li><i class="bi bi-check-circle text-success"></i> Özel Banyo</li>
-              <li><i class="bi bi-check-circle text-success"></i> Klima</li>
-              <li><i class="bi bi-check-circle text-success"></i> Ücretsiz Wi-Fi</li>
-              <li><i class="bi bi-check-circle text-success"></i> Balkon</li>
-              <li><i class="bi bi-check-circle text-success"></i> Mini Bar</li>
-            </ul>
-            <div class="mt-auto">
-              <p class="text-primary fw-bold mb-2">₺800/gece</p>
-              <a href="#" class="btn btn-outline-primary">Rezervasyon Yap</a>
-            </div>
-          </div>
-        </div>
-      </div>
+                <?php if (!empty($amenities)): ?>
+                  <ul class="list-unstyled mb-3">
+                    <?php foreach ($amenities as $am): ?>
+                      <li><i class="bi bi-check-circle text-success"></i> <?php echo htmlspecialchars($am); ?></li>
+                    <?php endforeach; ?>
+                  </ul>
+                <?php endif; ?>
 
-      <!-- Suite -->
-      <div class="col-md-6 col-lg-4">
-        <div class="card shadow-sm h-100">
-          <img src="../../assets/images/room-suite.jpg" class="card-img-top" alt="Suite">
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title">Suite</h5>
-            <p class="card-text">50m² alanında, en üst düzey konfor ve özel hizmetler.</p>
-            <ul class="list-unstyled mb-3">
-              <li><i class="bi bi-check-circle text-success"></i> 2 Yatak Odası</li>
-              <li><i class="bi bi-check-circle text-success"></i> Özel Banyo</li>
-              <li><i class="bi bi-check-circle text-success"></i> Klima</li>
-              <li><i class="bi bi-check-circle text-success"></i> Ücretsiz Wi-Fi</li>
-              <li><i class="bi bi-check-circle text-success"></i> Geniş Balkon</li>
-              <li><i class="bi bi-check-circle text-success"></i> Mini Bar</li>
-              <li><i class="bi bi-check-circle text-success"></i> Oturma Alanı</li>
-            </ul>
-            <div class="mt-auto">
-              <p class="text-primary fw-bold mb-2">₺1200/gece</p>
-              <a href="#" class="btn btn-outline-primary">Rezervasyon Yap</a>
+                <div class="mt-auto d-flex align-items-center justify-content-between">
+                  <p class="text-primary fw-bold mb-0">₺<?php echo number_format((float)$room['price'], 2); ?>/gece</p>
+                  <?php if ($isAvailable): ?>
+                    <a href="../../pages/reservation/rezervasyon.php?type=<?php echo urlencode($type); ?>" class="btn btn-outline-primary">Rezervasyon Yap</a>
+                  <?php else: ?>
+                    <button class="btn btn-outline-secondary" disabled>Dolu</button>
+                  <?php endif; ?>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-
-      <!-- Aile Odası -->
-      <div class="col-md-6 col-lg-4">
-        <div class="card shadow-sm h-100">
-          <img src="../../assets/images/room-family.jpg" class="card-img-top" alt="Aile Odası">
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title">Aile Odası</h5>
-            <p class="card-text">40m² alanında, geniş aileler için ideal konaklama.</p>
-            <ul class="list-unstyled mb-3">
-              <li><i class="bi bi-check-circle text-success"></i> 2 Yatak Odası</li>
-              <li><i class="bi bi-check-circle text-success"></i> Özel Banyo</li>
-              <li><i class="bi bi-check-circle text-success"></i> Klima</li>
-              <li><i class="bi bi-check-circle text-success"></i> Ücretsiz Wi-Fi</li>
-              <li><i class="bi bi-check-circle text-success"></i> Balkon</li>
-              <li><i class="bi bi-check-circle text-success"></i> Çocuk Yatakları</li>
-            </ul>
-            <div class="mt-auto">
-              <p class="text-primary fw-bold mb-2">₺900/gece</p>
-              <a href="#" class="btn btn-outline-primary">Rezervasyon Yap</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Ekonomik Oda -->
-      <div class="col-md-6 col-lg-4">
-        <div class="card shadow-sm h-100">
-          <img src="../../assets/images/room-economy.jpg" class="card-img-top" alt="Ekonomik Oda">
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title">Ekonomik Oda</h5>
-            <p class="card-text">20m² alanında, bütçe dostu konaklama seçeneği.</p>
-            <ul class="list-unstyled mb-3">
-              <li><i class="bi bi-check-circle text-success"></i> 1 Yatak Odası</li>
-              <li><i class="bi bi-check-circle text-success"></i> Özel Banyo</li>
-              <li><i class="bi bi-check-circle text-success"></i> Klima</li>
-              <li><i class="bi bi-check-circle text-success"></i> Ücretsiz Wi-Fi</li>
-            </ul>
-            <div class="mt-auto">
-              <p class="text-primary fw-bold mb-2">₺300/gece</p>
-              <a href="#" class="btn btn-outline-primary">Rezervasyon Yap</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Premium Suite -->
-      <div class="col-md-6 col-lg-4">
-        <div class="card shadow-sm h-100">
-          <img src="../../assets/images/room-premium.jpg" class="card-img-top" alt="Premium Suite">
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title">Premium Suite</h5>
-            <p class="card-text">70m² alanında, en lüks konaklama deneyimi.</p>
-            <ul class="list-unstyled mb-3">
-              <li><i class="bi bi-check-circle text-success"></i> 2 Yatak Odası</li>
-              <li><i class="bi bi-check-circle text-success"></i> Özel Banyo</li>
-              <li><i class="bi bi-check-circle text-success"></i> Klima</li>
-              <li><i class="bi bi-check-circle text-success"></i> Ücretsiz Wi-Fi</li>
-              <li><i class="bi bi-check-circle text-success"></i> Geniş Balkon</li>
-              <li><i class="bi bi-check-circle text-success"></i> Mini Bar</li>
-              <li><i class="bi bi-check-circle text-success"></i> Oturma Alanı</li>
-              <li><i class="bi bi-check-circle text-success"></i> Jakuzi</li>
-            </ul>
-            <div class="mt-auto">
-              <p class="text-primary fw-bold mb-2">₺1500/gece</p>
-              <a href="#" class="btn btn-outline-primary">Rezervasyon Yap</a>
-            </div>
-          </div>
-        </div>
-      </div>
+        <?php endforeach; ?>
+      <?php endif; ?>
     </div>
   </div>
 </section>
