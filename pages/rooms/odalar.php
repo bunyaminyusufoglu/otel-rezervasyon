@@ -80,7 +80,7 @@
           <?php
             $type = $room['type'];
             $image = trim($room['image'] ?? '');
-            $imagePath = '../../' . ($image !== '' ? $image : ('assets/images/' . ($typeToImage[$type] ?? 'room-standard.jpg')));
+            $imagePath = '../../assets/images/' . ($typeToImage[$type] ?? 'room-standard.jpg');
             $isAvailable = ($room['status'] ?? 'available') === 'available';
             $amenities = array_filter(array_map('trim', explode(',', (string)($room['amenities'] ?? ''))));
             $amenities = array_slice($amenities, 0, 6);

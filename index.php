@@ -24,7 +24,7 @@ include 'includes/header.php';
         <?php endif; ?>
       </div>
       <div class="col-lg-6 text-center mt-4 mt-lg-0">
-        <img src="assets\images\hotel-hero.jpg" alt="Otel Görseli" class="img-fluid rounded shadow">
+        <img src="assets/images/hotel-hero.jpg" alt="Otel Görseli" class="img-fluid rounded shadow">
       </div>
     </div>
   </div>

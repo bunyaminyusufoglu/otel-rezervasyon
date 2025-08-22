@@ -18,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $status = $_POST['status'] ?? 'available';
     $description = trim($_POST['description'] ?? '');
     $amenities = trim($_POST['amenities'] ?? '');
+    $image = trim($_POST['image'] ?? '');
     
     // Validasyon
     if (empty($name) || empty($type) || $capacity < 1 || $price <= 0) {
@@ -29,12 +30,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         // Oda ekle (mevcut veritabanı yapısıyla uyumlu)
         $stmt = $pdo->prepare("
-            INSERT INTO rooms (name, type, price, capacity, description, amenities, status) 
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO rooms (name, type, price, capacity, description, amenities, status, image) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         ");
         
         $result = $stmt->execute([
-            $name, $type, $price, $capacity, $description, $amenities, $status
+            $name, $type, $price, $capacity, $description, $amenities, $status, $image
         ]);
         
         if ($result) {

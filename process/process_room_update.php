@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $status = $_POST['status'] ?? 'available';
     $description = trim($_POST['description'] ?? '');
     $amenities = trim($_POST['amenities'] ?? '');
+    $image = trim($_POST['image'] ?? '');
     
     // Validasyon
     if ($room_id <= 0 || empty($name) || empty($type) || $capacity < 1 || $price <= 0) {
@@ -37,15 +38,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     
     try {
-        // Oda güncelle (mevcut veritabanı yapısıyla uyumlu)
+        // Oda güncelle (mevcut veritabanı yapışıyla uyumlu)
         $stmt = $pdo->prepare("
             UPDATE rooms SET 
-                name = ?, type = ?, price = ?, capacity = ?, description = ?, amenities = ?, status = ?
+                name = ?, type = ?, price = ?, capacity = ?, description = ?, amenities = ?, status = ?, image = ?
             WHERE id = ?
         ");
         
         $result = $stmt->execute([
-            $name, $type, $price, $capacity, $description, $amenities, $status, $room_id
+            $name, $type, $price, $capacity, $description, $amenities, $status, $image, $room_id
         ]);
         
         if ($result) {

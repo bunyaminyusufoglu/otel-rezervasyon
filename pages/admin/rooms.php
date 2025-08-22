@@ -109,7 +109,24 @@ $roomStatuses = ['available', 'occupied', 'maintenance'];
                 <div class="position-relative">
                   <div class="card-img-top bg-light d-flex align-items-center justify-content-center" 
                        style="height: 200px;">
-                    <i class="bi bi-image text-muted display-4"></i>
+                      <?php
+                        $typeToImage = [
+                          'standard' => 'room-standard.jpg',
+                          'deluxe'   => 'room-deluxe.jpg',
+                          'suite'    => 'room-suite.jpg',
+                          'family'   => 'room-family.jpg',
+                          'economy'  => 'room-economy.jpg',
+                          'premium'  => 'room-premium.jpg',
+                        ];
+                        
+                        // Eğer veritabanında özel fotoğraf varsa onu kullan, yoksa oda tipine göre otomatik seç
+                        if (!empty($room['image'])) {
+                          $imagePath = '../../assets/images/' . $room['image'];
+                        } else {
+                          $imagePath = '../../assets/images/' . ($typeToImage[$room['type']] ?? 'room-standard.jpg');
+                        }
+                      ?>
+                      <img src="<?php echo htmlspecialchars($imagePath); ?>" alt="Oda Fotoğrafı" class="img-fluid" style="max-height: 100%; max-width: 100%; object-fit: cover;">
                   </div>
                   
                   <!-- Durum Badge'leri -->
@@ -150,7 +167,7 @@ $roomStatuses = ['available', 'occupied', 'maintenance'];
                   
                   <div class="d-flex justify-content-between align-items-center">
                     <small class="text-muted">
-                      <i class="bi bi-image"></i> 0 fotoğraf
+                      <i class="bi bi-image"></i> <?php echo !empty($room['image']) ? '1' : '0'; ?> fotoğraf
                     </small>
                     <div>
                       <button class="btn btn-sm btn-outline-primary" 
@@ -224,6 +241,19 @@ $roomStatuses = ['available', 'occupied', 'maintenance'];
               <label class="form-label">Özellikler</label>
               <textarea class="form-control" name="amenities" rows="2" placeholder="Wi-Fi, Klima, Mini Bar, vb."></textarea>
             </div>
+            <div class="col-12">
+              <label class="form-label">Fotoğraf</label>
+              <select class="form-select" name="image">
+                <option value="">Oda tipine göre otomatik seçilecek</option>
+                <option value="room-standard.jpg">Standart Oda Fotoğrafı</option>
+                <option value="room-deluxe.jpg">Deluxe Oda Fotoğrafı</option>
+                <option value="room-suite.jpg">Suite Fotoğrafı</option>
+                <option value="room-family.jpg">Aile Odası Fotoğrafı</option>
+                <option value="room-economy.jpg">Ekonomik Oda Fotoğrafı</option>
+                <option value="room-premium.jpg">Premium Oda Fotoğrafı</option>
+              </select>
+              <small class="form-text text-muted">Fotoğraf seçilmezse oda tipine göre otomatik olarak uygun fotoğraf kullanılacaktır.</small>
+            </div>
           </div>
         </div>
         <div class="modal-footer">
@@ -286,6 +316,19 @@ $roomStatuses = ['available', 'occupied', 'maintenance'];
               <label class="form-label">Özellikler</label>
               <textarea class="form-control" id="edit_amenities" name="amenities" rows="2"></textarea>
             </div>
+            <div class="col-12">
+              <label class="form-label">Fotoğraf</label>
+              <select class="form-select" id="edit_image" name="image">
+                <option value="">Oda tipine göre otomatik seçilecek</option>
+                <option value="room-standard.jpg">Standart Oda Fotoğrafı</option>
+                <option value="room-deluxe.jpg">Deluxe Oda Fotoğrafı</option>
+                <option value="room-suite.jpg">Suite Fotoğrafı</option>
+                <option value="room-family.jpg">Aile Odası Fotoğrafı</option>
+                <option value="room-economy.jpg">Ekonomik Oda Fotoğrafı</option>
+                <option value="room-premium.jpg">Premium Oda Fotoğrafı</option>
+              </select>
+              <small class="form-text text-muted">Fotoğraf seçilmezse oda tipine göre otomatik olarak uygun fotoğraf kullanılacaktır.</small>
+            </div>
           </div>
         </div>
         <div class="modal-footer">
@@ -316,6 +359,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('edit_status').value = roomData.status;
             document.getElementById('edit_description').value = roomData.description || '';
             document.getElementById('edit_amenities').value = roomData.amenities || '';
+            document.getElementById('edit_image').value = roomData.image || '';
                 });
     }
 });
