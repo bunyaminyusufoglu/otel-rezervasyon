@@ -1,4 +1,7 @@
-<?php include '../../includes/header.php'; ?>
+<?php 
+include '../../includes/header.php'; 
+require_once '../../includes/CSRFHelper.php';
+?>
 
 <!-- Login Form -->
 <section class="py-5 bg-white">
@@ -11,6 +14,7 @@
           </div>
           <div class="card-body p-4">
             <form method="POST" action="../../process/process_login.php">
+              <?php echo CSRFHelper::getTokenField(); ?>
               <div class="mb-3">
                 <label for="email" class="form-label">E-posta</label>
                 <input type="email" class="form-control" id="email" name="email" required>

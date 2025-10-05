@@ -1,4 +1,9 @@
-<?php if (!session_id()) session_start(); ?>
+<?php 
+// Session güvenliğini yapılandır (session başlamadan önce)
+require_once 'session.php';
+// CSRF helper'ı yükle
+require_once 'CSRFHelper.php';
+?>
 <!DOCTYPE html>
 <html lang="tr">
 <head>

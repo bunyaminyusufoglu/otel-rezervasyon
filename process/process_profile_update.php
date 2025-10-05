@@ -1,8 +1,13 @@
 <?php
-session_start();
+require_once '../includes/session.php';
 require_once '../includes/db.php';
+require_once '../includes/CSRFHelper.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // CSRF token doğrulama
+    if (!CSRFHelper::validatePostToken()) {
+        CSRFHelper::handleValidationFailure();
+    }
     // Giriş kontrolü
     if (!isset($_SESSION['user_id'])) {
         $_SESSION['error'] = "Bu işlem için giriş yapmalısınız.";

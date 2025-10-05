@@ -1,5 +1,6 @@
 <?php 
 include '../../includes/header.php'; 
+require_once '../../includes/CSRFHelper.php';
 
 // Giriş kontrolü
 if (!isset($_SESSION['user_id'])) {
@@ -48,6 +49,7 @@ $user = $stmt->fetch();
           </div>
           <div class="card-body p-4">
             <form method="POST" action="../../process/process_reservation.php" id="reservationForm">
+              <?php echo CSRFHelper::getTokenField(); ?>
               <div class="row g-3">
                 <!-- Kişisel Bilgiler -->
                 <div class="col-12">
@@ -242,6 +244,7 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append('room_type', roomType);
         formData.append('checkin_date', checkin);
         formData.append('checkout_date', checkout);
+        formData.append('csrf_token', '<?php echo CSRFHelper::generateToken(); ?>');
         
         fetch('../../process/check_availability.php', {
             method: 'POST',

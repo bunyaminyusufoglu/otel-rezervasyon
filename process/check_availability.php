@@ -1,11 +1,18 @@
 <?php
-session_start();
+require_once '../includes/session.php';
 require_once '../includes/db.php';
 require_once '../includes/ReservationHelper.php';
+require_once '../includes/CSRFHelper.php';
 
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // AJAX istekleri için CSRF token doğrulama
+    $token = $_POST['csrf_token'] ?? '';
+    if (!CSRFHelper::validateToken($token)) {
+        echo json_encode(['success' => false, 'message' => 'CSRF token validation failed']);
+        exit();
+    }
     $room_type = $_POST['room_type'] ?? '';
     $checkin_date = $_POST['checkin_date'] ?? '';
     $checkout_date = $_POST['checkout_date'] ?? '';

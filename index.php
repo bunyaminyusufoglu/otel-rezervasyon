@@ -1,5 +1,5 @@
 <?php 
-session_start();
+require_once 'includes/session.php';
 
 // Admin kullanıcıları dashboard'a yönlendir
 if (isset($_SESSION['user_id']) && ($_SESSION['user_role'] ?? 'customer') === 'admin') {

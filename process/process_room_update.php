@@ -1,6 +1,7 @@
 <?php
-session_start();
+require_once '../includes/session.php';
 require_once '../includes/db.php';
+require_once '../includes/CSRFHelper.php';
 
 // Sadece admin erişebilir
 if (!isset($_SESSION['user_id']) || ($_SESSION['user_role'] ?? 'customer') !== 'admin') {
@@ -10,6 +11,11 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['user_role'] ?? 'customer') !== '
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // CSRF token doğrulama
+    if (!CSRFHelper::validatePostToken()) {
+        CSRFHelper::handleValidationFailure();
+    }
+    
     // Form verilerini al
     $room_id = (int)($_POST['room_id'] ?? 0);
     $name = trim($_POST['name'] ?? '');

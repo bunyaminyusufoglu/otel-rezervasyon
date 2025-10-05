@@ -1,10 +1,16 @@
 <?php
-session_start();
+require_once '../includes/session.php';
 require_once '../includes/db.php';
+require_once '../includes/CSRFHelper.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: ../index.php');
     exit();
+}
+
+// CSRF token doğrulama
+if (!CSRFHelper::validatePostToken()) {
+    CSRFHelper::handleValidationFailure();
 }
 
 if (!isset($_SESSION['user_id']) || ($_SESSION['user_role'] ?? 'customer') !== 'admin') {

@@ -1,9 +1,14 @@
 <?php
-session_start();
+require_once '../includes/session.php';
 require_once '../includes/db.php';
 require_once '../includes/ReservationHelper.php';
+require_once '../includes/CSRFHelper.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // CSRF token doğrulama
+    if (!CSRFHelper::validatePostToken()) {
+        CSRFHelper::handleValidationFailure();
+    }
     // Admin engeli
     if (($_SESSION['user_role'] ?? 'customer') === 'admin') {
         $_SESSION['error'] = 'Yöneticiler rezervasyon oluşturamaz.';

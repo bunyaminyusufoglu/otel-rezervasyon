@@ -1,8 +1,13 @@
 <?php
-session_start();
+require_once '../includes/session.php';
 require_once '../includes/db.php';
+require_once '../includes/CSRFHelper.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // CSRF token doğrulama
+    if (!CSRFHelper::validatePostToken()) {
+        CSRFHelper::handleValidationFailure();
+    }
     $first_name = trim($_POST['first_name']);
     $last_name = trim($_POST['last_name']);
     $email = trim($_POST['email']);

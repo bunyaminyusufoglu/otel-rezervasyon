@@ -1,4 +1,7 @@
-<?php include '../../includes/header.php'; ?>
+<?php 
+include '../../includes/header.php'; 
+require_once '../../includes/CSRFHelper.php';
+?>
 
 <!-- Register Form -->
 <section class="py-5 bg-white">
@@ -11,6 +14,7 @@
           </div>
           <div class="card-body p-4">
             <form method="POST" action="../../process/process_register.php">
+              <?php echo CSRFHelper::getTokenField(); ?>
               <div class="row g-3">
                 <div class="col-md-6">
                   <label for="first_name" class="form-label">Ad *</label>
